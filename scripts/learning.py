@@ -12,7 +12,7 @@ from contextlib import contextmanager
 from datetime import date, datetime
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePath
 import re
 import sys
 import tempfile
@@ -32,7 +32,9 @@ class LearningError(Exception):
 
 def inside(base: Path, relative: str | Path) -> Path:
     """Reject absolute paths, traversal, and symlinks in vault-controlled paths."""
-    raw = str(relative)
+    # Internal Path objects use platform-native separators; user strings still
+    # reject backslashes to keep the vault-relative input format unambiguous.
+    raw = relative.as_posix() if isinstance(relative, PurePath) else str(relative)
     p = Path(raw)
     if not raw or "\\" in raw or p.is_absolute() or any(x in ("..", ".") for x in p.parts):
         raise LearningError(f"不允许的库内路径：{raw}")

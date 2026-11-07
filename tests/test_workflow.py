@@ -2,7 +2,7 @@
 import contextlib
 import io
 import json
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import shutil
 import sys
 import tempfile
@@ -22,13 +22,20 @@ class WorkflowTests(unittest.TestCase):
         shutil.copytree(ROOT / 'obsidian', self.root / 'obsidian')
         shutil.copy(ROOT / 'workflow.json', self.root)
         self.vault = self.root / 'vault'
+        # Exercise a clean sample even when this checkout contains real archives.
+        shutil.rmtree(self.vault / '02 Projects/getting-started/Sessions', ignore_errors=True)
+        for entry in (self.vault / '03 Daily').glob('20*.md'):
+            entry.unlink()
+        app.refresh(self.root)
 
     def tearDown(self):
         self.tmp.cleanup()
 
     def call(self, *args):
-        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-            return app.main(['--root', str(self.root), *args])
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()) as err:
+            result = app.main(['--root', str(self.root), *args])
+        self.last_error = err.getvalue()
+        return result
 
     def session(self, **extra):
         data = {'id': 'first-observation', 'project': 'getting-started', 'date': '2026-01-02',
@@ -40,10 +47,18 @@ class WorkflowTests(unittest.TestCase):
         p.write_text(json.dumps(data))
         return p
 
+    def test_windows_internal_paths_are_normalized_without_accepting_unsafe_strings(self):
+        result = app.inside(self.vault, PureWindowsPath('02 Projects/getting-started/Progress.md'))
+        self.assertEqual(result, self.vault / '02 Projects/getting-started/Progress.md')
+        with self.assertRaises(app.LearningError):
+            app.inside(self.vault, r'02 Projects\..\secret.md')
+        with self.assertRaises(app.LearningError):
+            app.inside(self.vault, PureWindowsPath('../secret.md'))
+
     def test_multi_subject_projects_and_stable_menu(self):
-        self.assertEqual(self.call('project', 'linguistics', '--title', '语言研究'), 0)
+        self.assertEqual(self.call('project', 'linguistics', '--title', '语言研究'), 0, self.last_error)
         self.assertEqual(self.call('project', 'statistics', '--title', '统计学'), 0)
-        self.assertEqual(self.call('refresh'), 0)
+        self.assertEqual(self.call('refresh'), 0, self.last_error)
         config = json.loads((self.root / 'obsidian/quickadd.choices.json').read_text())
         self.assertEqual(len(config['choices'][0]['choices']), 3)
         progress = (self.vault / '02 Projects/linguistics/Progress.md').read_text()
@@ -54,8 +69,8 @@ class WorkflowTests(unittest.TestCase):
 
     def test_record_idempotence_conflict_and_real_results(self):
         source = self.session()
-        self.assertEqual(self.call('record', str(source)), 0)
-        self.assertEqual(self.call('record', str(source)), 0)
+        self.assertEqual(self.call('record', str(source)), 0, self.last_error)
+        self.assertEqual(self.call('record', str(source)), 0, self.last_error)
         sessions = list((self.vault / '02 Projects/getting-started/Sessions').glob('*.md'))
         self.assertEqual(len(sessions), 1)
         text = sessions[0].read_text()
@@ -73,15 +88,15 @@ class WorkflowTests(unittest.TestCase):
         del data['date']
         source.write_text(json.dumps(data))
         with patch.object(app, 'day_for', return_value='2026-01-02'):
-            self.assertEqual(self.call('record', str(source)), 0)
+            self.assertEqual(self.call('record', str(source)), 0, self.last_error)
         with patch.object(app, 'day_for', return_value='2026-01-03'):
-            self.assertEqual(self.call('record', str(source)), 0)
+            self.assertEqual(self.call('record', str(source)), 0, self.last_error)
         self.assertEqual(len(list((self.vault / '02 Projects/getting-started/Sessions').glob('*.md'))), 1)
 
     def test_no_command_execution_from_record(self):
         marker = self.root / 'executed'
         source = self.session(tests=[{'command': f'touch {marker}', 'result': 'not_run', 'evidence': 'Not executed'}])
-        self.assertEqual(self.call('record', str(source)), 0)
+        self.assertEqual(self.call('record', str(source)), 0, self.last_error)
         self.assertFalse(marker.exists())
 
     def test_review_preserves_mastery_and_updates_full_links(self):
@@ -91,7 +106,7 @@ class WorkflowTests(unittest.TestCase):
         ref.write_text('---\ntype: reference\n---\n[[99 Inbox/candidate|Idea]]\n')
         self.assertEqual(self.call('review', '99 Inbox/candidate.md'), 1)
         self.assertTrue(draft.exists())
-        self.assertEqual(self.call('review', '99 Inbox/candidate.md', '--approve'), 0)
+        self.assertEqual(self.call('review', '99 Inbox/candidate.md', '--approve'), 0, self.last_error)
         dest = self.vault / '01 Knowledge/Math/idea.md'
         self.assertIn('status: reviewed', dest.read_text())
         self.assertIn('mastery: unassessed', dest.read_text())
@@ -124,9 +139,9 @@ class WorkflowTests(unittest.TestCase):
     def test_managed_refresh_preserves_user_prose_and_is_idempotent(self):
         home = self.vault / '00 Dashboard/Home.md'
         home.write_text(home.read_text() + '\nA personal annotation.\n')
-        self.assertEqual(self.call('refresh'), 0)
+        self.assertEqual(self.call('refresh'), 0, self.last_error)
         before = home.read_bytes()
-        self.assertEqual(self.call('refresh'), 0)
+        self.assertEqual(self.call('refresh'), 0, self.last_error)
         self.assertEqual(home.read_bytes(), before)
         self.assertIn('A personal annotation.', home.read_text())
 
@@ -142,7 +157,7 @@ class WorkflowTests(unittest.TestCase):
         meta = app.frontmatter(text)
         self.assertEqual(meta['mastery'], 'unassessed')
         self.assertEqual(meta['stage_1'], 'planned')
-        self.assertEqual(self.call('refresh'), 0)
+        self.assertEqual(self.call('refresh'), 0, self.last_error)
         self.assertEqual(path.read_text(), text)
         self.assertNotIn('/5', (self.vault / '00 Dashboard/学习工作台.base').read_text())
 
