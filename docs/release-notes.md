@@ -18,3 +18,5 @@ Validation performed locally:
 - Native Bases query: the learner-session view was empty, excluding templates as intended. No runtime errors captured.
 
 CI adds macOS, Linux and Windows coverage on Python 3.10 and 3.13. Those platform runs are separate from the local checks above. Firmware and embedded tools are outside this project.
+
+Generated execution archive: [release-session.md](release-session.md). This records Agent work, not a learner assessment.

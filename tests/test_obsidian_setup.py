@@ -242,7 +242,10 @@ class WorkbenchSnippetTests(unittest.TestCase):
         external = self.root / "user-snippet.css"
         external.write_text("user-owned")
         self.snippet.unlink()
-        self.snippet.symlink_to(external)
+        try:
+            self.snippet.symlink_to(external)
+        except OSError:
+            self.skipTest("Symlink creation unavailable")
         with self.assertRaises(setup.SetupError):
             self.apply()
         self.assertTrue(self.snippet.is_symlink())
@@ -365,7 +368,10 @@ class InstallationTests(unittest.TestCase):
             target.mkdir(parents=True)
             other_file = root / "unrelated.txt"
             other_file.write_text("must not be overwritten")
-            (target / "main.js").symlink_to(other_file)
+            try:
+                (target / "main.js").symlink_to(other_file)
+            except OSError:
+                self.skipTest("Symlink creation unavailable")
             setup.install_plugin_assets(target, {"id": "quickadd", "version": "2.33.1"},
                                         self.assets(), root / "backup")
             self.assertEqual(other_file.read_text(), "must not be overwritten")
