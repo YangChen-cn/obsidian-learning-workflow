@@ -1,0 +1,5 @@
+/* Reading-view only; themes and editor properties remain editable. */
+.markdown-preview-view:is(.learning-workbench, .learning-practice) .metadata-container,
+.markdown-preview-view:is(.learning-workbench, .learning-practice) .inline-title { display: none; }
+.markdown-preview-view:is(.learning-workbench, .learning-practice) .mb-button-group { flex-wrap: wrap; gap: .4em; }
+.markdown-preview-view.learning-workbench h2 { margin-top: 1.6em; }

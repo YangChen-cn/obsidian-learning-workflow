@@ -1,0 +1,173 @@
+{
+  "choices": [
+    {
+      "id": "082b41bb-8355-5f0c-ac93-f6a982e4e84d",
+      "name": "记录实践观察",
+      "type": "Multi",
+      "command": true,
+      "choices": [
+        {
+          "id": "a57dac85-17f0-5eb4-acb3-a153cdb1386d",
+          "name": "getting-started · 记观察",
+          "type": "Capture",
+          "command": true,
+          "captureTo": "02 Projects/getting-started/Practice.md",
+          "captureToActiveFile": false,
+          "captureToCanvasNodeId": "",
+          "activeFileWritePosition": "cursor",
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "\n**{{DATE:YYYY-MM-DD}} · 随手记录**\n\n{{VALUE:观察与理解|type:multiline|label:你看到了什么？你怎么理解？}}\n\n**证据（可选）**\n\n````text\n{{VALUE:证据|type:multiline|optional|label:摘录、结果或证据链接（可留空）}}\n````\n\n"
+          },
+          "insertAfter": {
+            "enabled": true,
+            "after": "### 我的记录",
+            "insertAtEnd": true,
+            "considerSubsections": true,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top",
+            "inline": false,
+            "replaceExisting": false,
+            "blankLineAfterMatchMode": "auto",
+            "promptHeading": true
+          },
+          "insertBefore": {
+            "enabled": false,
+            "before": "",
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "newLineCapture": {
+            "enabled": false,
+            "direction": "below"
+          },
+          "prepend": false,
+          "task": false,
+          "eachLine": false,
+          "openFile": false,
+          "fileOpening": {
+            "location": "tab",
+            "direction": "vertical",
+            "mode": "default",
+            "focus": true
+          },
+          "appendLink": false,
+          "copyLinkToClipboard": false,
+          "templater": {
+            "afterCapture": "none"
+          }
+        }
+      ]
+    },
+    {
+      "id": "09e2a939-d095-5062-a5b2-9ecb175b4775",
+      "name": "记录学习疑问",
+      "type": "Multi",
+      "command": true,
+      "choices": [
+        {
+          "id": "fb0dd6c6-ad48-5120-8237-5281a49a8141",
+          "name": "getting-started · 记疑问",
+          "type": "Capture",
+          "command": true,
+          "captureTo": "02 Projects/getting-started/Questions.md",
+          "captureToActiveFile": false,
+          "captureToCanvasNodeId": "",
+          "activeFileWritePosition": "cursor",
+          "createFileIfItDoesntExist": {
+            "enabled": false,
+            "createWithTemplate": false,
+            "template": ""
+          },
+          "format": {
+            "enabled": true,
+            "format": "\n**{{DATE:YYYY-MM-DD}}**\n\n{{VALUE:疑问|type:multiline|label:哪里还没想明白？}}\n\n"
+          },
+          "insertAfter": {
+            "enabled": true,
+            "after": "## 待解决",
+            "insertAtEnd": true,
+            "considerSubsections": true,
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top",
+            "inline": false,
+            "replaceExisting": false,
+            "blankLineAfterMatchMode": "auto",
+            "promptHeading": false
+          },
+          "insertBefore": {
+            "enabled": false,
+            "before": "",
+            "createIfNotFound": false,
+            "createIfNotFoundLocation": "top"
+          },
+          "newLineCapture": {
+            "enabled": false,
+            "direction": "below"
+          },
+          "prepend": false,
+          "task": false,
+          "eachLine": false,
+          "openFile": false,
+          "fileOpening": {
+            "location": "tab",
+            "direction": "vertical",
+            "mode": "default",
+            "focus": true
+          },
+          "appendLink": false,
+          "copyLinkToClipboard": false,
+          "templater": {
+            "afterCapture": "none"
+          }
+        }
+      ]
+    },
+    {
+      "id": "a7b619b4-3fd3-5ba6-83e0-90acf3906c3c",
+      "name": "新增学习会话",
+      "type": "Multi",
+      "command": true,
+      "choices": [
+        {
+          "id": "2c9364ab-a225-573d-84f7-237e62b760c5",
+          "name": "getting-started · 学习会话",
+          "type": "Template",
+          "command": true,
+          "templatePath": "02 Projects/getting-started/Learning Template.md",
+          "fileNameFormat": {
+            "enabled": true,
+            "format": "{{DATE:YYYY-MM-DD}}-{{VALUE:标题|label:标题（不要包含斜杠）}}"
+          },
+          "folder": {
+            "enabled": true,
+            "folders": [
+              "02 Projects/getting-started/Learning"
+            ],
+            "chooseWhenCreatingNote": false,
+            "createInSameFolderAsActiveFile": false,
+            "chooseFromSubfolders": false
+          },
+          "openFile": true,
+          "fileOpening": {
+            "location": "tab",
+            "direction": "vertical",
+            "mode": "default",
+            "focus": true
+          },
+          "appendLink": false,
+          "copyLinkToClipboard": false,
+          "discoverExistingNotesBeforeCreate": false,
+          "fileExistsBehavior": {
+            "kind": "prompt"
+          }
+        }
+      ]
+    }
+  ]
+}

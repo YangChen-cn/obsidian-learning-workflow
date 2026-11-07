@@ -1,0 +1,60 @@
+filters:
+  and:
+    - 'file.ext == "md"'
+    - '!file.inFolder("00 Dashboard/Templates")'
+    - '!file.path.endsWith("/Learning Template.md")'
+formulas:
+  mastery_label: 'if(mastery == "unassessed", "待自评", if(mastery == "learning", "学习中", if(mastery == "practiced", "已练习", if(mastery == "explained", "能解释", if(mastery == "applied", "能应用", "")))))'
+  state_label: 'if(status == "planned", "待开始", if(status == "in-progress", "进行中", if(status == "done", "已完成", status)))'
+properties:
+  file.name:
+    displayName: 笔记
+  note.project:
+    displayName: 项目
+  note.date:
+    displayName: 日期
+  note.actor:
+    displayName: 执行者
+  formula.mastery_label:
+    displayName: 本人自评
+  formula.state_label:
+    displayName: 状态
+views:
+  - type: table
+    name: 项目与实践
+    filters:
+      or:
+        - 'type == "project"'
+        - 'type == "experiment"'
+    order: [file.name, note.project, formula.state_label]
+  - type: table
+    name: 最近学习会话
+    filters: 'type == "learning-session"'
+    order: [file.name, note.project, note.date, note.actor]
+    sort:
+      - property: note.date
+        direction: DESC
+    limit: 10
+  - type: table
+    name: 执行档案
+    filters: 'type == "session"'
+    order: [file.name, note.project, note.date, note.actor]
+    sort:
+      - property: note.date
+        direction: DESC
+    limit: 10
+  - type: table
+    name: 待审核草稿
+    filters:
+      and:
+        - 'type == "knowledge"'
+        - 'status == "draft"'
+    order: [file.name, note.topic, formula.mastery_label]
+  - type: table
+    name: 知识自评
+    filters: 'type == "knowledge"'
+    order: [file.name, note.topic, formula.mastery_label]
+  - type: table
+    name: 活动日期
+    filters: 'type == "daily"'
+    order: [file.name]

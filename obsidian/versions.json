@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "obsidian": {
+    "minimum": "1.13.1",
+    "tested": "1.14.5"
+  },
+  "plugins": [
+    {
+      "id": "obsidian-meta-bind-plugin",
+      "name": "Meta Bind",
+      "version": "1.5.1",
+      "minAppVersion": "1.13.1",
+      "repo": "mProjectsCode/obsidian-meta-bind-plugin",
+      "assets": {
+        "main.js": "d328bfaa4d1f48259074b28f249a9f911ea34327e7e1123d8a1f2afc3e9784b3",
+        "manifest.json": "3c1dff1e36a17811851f3c7446b875cf901288b73261caea61bc0d440d3c4325",
+        "styles.css": "97069e183224c55428fe0b983d42435aa2cd4ac14d0f50186138b4751ad55d61"
+      }
+    },
+    {
+      "id": "quickadd",
+      "name": "QuickAdd",
+      "version": "2.33.1",
+      "minAppVersion": "1.13.0",
+      "repo": "chhoumann/quickadd",
+      "assets": {
+        "main.js": "641ae5f5683c69472a8a8890d83ec67173b7a574b6ae4bca8751df7b9fe56c33",
+        "manifest.json": "04a7b033247507e81b041c5e596ce2224c293dda8100461b6c03d6c3aca20486",
+        "styles.css": "349a2972e2e274fbe6293a4479200114c5057a148c8f3edf3716d437ff89d39e"
+      }
+    },
+    {
+      "id": "flashcard-studio",
+      "name": "Flashcard Studio",
+      "version": "0.13.0",
+      "minAppVersion": "1.13.1",
+      "repo": "almalkiid/flashcard-studio",
+      "assets": {
+        "main.js": "d646a47571e3c5677a8193685dbe0060028fe21f7c6fd8328143f66c5e57ad4f",
+        "manifest.json": "430f376345202d094722709e2a08bacdabc9fe4f899efde542c30864f82f1304",
+        "styles.css": "c14c74c0f5ac12c5a6e61f48ff2bae86d1f0441aac21a454ca741ce0c30062f8"
+      }
+    }
+  ]
+}

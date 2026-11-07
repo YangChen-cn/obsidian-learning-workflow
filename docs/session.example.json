@@ -1,0 +1,13 @@
+{
+  "id": "replace-with-stable-id",
+  "project": "getting-started",
+  "title": "替换：本次实际活动",
+  "actor": "agent",
+  "summary": "替换：实际做了什么、目的与当前结果；示例不是已发生的记录。",
+  "topics": ["自由填写领域"],
+  "sources": ["明确提供的资料、源文件或公开来源链接"],
+  "learned": ["替换：有证据的技术或方法发现，不代表本人已掌握"],
+  "questions": [],
+  "next_steps": ["替换：下一项可验证的小任务"],
+  "tests": [{"command": "替换：实际检查步骤（也可以是非命令式检查）", "result": "not_run", "evidence": "尚未执行；执行后再填实际结果。"}]
+}

@@ -1,0 +1,89 @@
+{
+  "capture": {
+    "id": "",
+    "name": "",
+    "type": "Capture",
+    "command": true,
+    "captureTo": "",
+    "captureToActiveFile": false,
+    "captureToCanvasNodeId": "",
+    "activeFileWritePosition": "cursor",
+    "createFileIfItDoesntExist": {
+      "enabled": false,
+      "createWithTemplate": false,
+      "template": ""
+    },
+    "format": {
+      "enabled": true,
+      "format": "\n**{{DATE:YYYY-MM-DD}} · 随手记录**\n\n{{VALUE:观察与理解|type:multiline|label:你看到了什么？你怎么理解？}}\n\n**证据（可选）**\n\n````text\n{{VALUE:证据|type:multiline|optional|label:摘录、结果或证据链接（可留空）}}\n````\n\n"
+    },
+    "insertAfter": {
+      "enabled": true,
+      "after": "### 我的记录",
+      "insertAtEnd": true,
+      "considerSubsections": true,
+      "createIfNotFound": false,
+      "createIfNotFoundLocation": "top",
+      "inline": false,
+      "replaceExisting": false,
+      "blankLineAfterMatchMode": "auto",
+      "promptHeading": false
+    },
+    "insertBefore": {
+      "enabled": false,
+      "before": "",
+      "createIfNotFound": false,
+      "createIfNotFoundLocation": "top"
+    },
+    "newLineCapture": {
+      "enabled": false,
+      "direction": "below"
+    },
+    "prepend": false,
+    "task": false,
+    "eachLine": false,
+    "openFile": false,
+    "fileOpening": {
+      "location": "tab",
+      "direction": "vertical",
+      "mode": "default",
+      "focus": true
+    },
+    "appendLink": false,
+    "copyLinkToClipboard": false,
+    "templater": {
+      "afterCapture": "none"
+    }
+  },
+  "session": {
+    "id": "",
+    "name": "",
+    "type": "Template",
+    "command": true,
+    "templatePath": "",
+    "fileNameFormat": {
+      "enabled": true,
+      "format": "{{DATE:YYYY-MM-DD}}-{{VALUE:标题|label:标题（不要包含斜杠）}}"
+    },
+    "folder": {
+      "enabled": true,
+      "folders": [],
+      "chooseWhenCreatingNote": false,
+      "createInSameFolderAsActiveFile": false,
+      "chooseFromSubfolders": false
+    },
+    "openFile": true,
+    "fileOpening": {
+      "location": "tab",
+      "direction": "vertical",
+      "mode": "default",
+      "focus": true
+    },
+    "appendLink": false,
+    "copyLinkToClipboard": false,
+    "discoverExistingNotesBeforeCreate": false,
+    "fileExistsBehavior": {
+      "kind": "prompt"
+    }
+  }
+}

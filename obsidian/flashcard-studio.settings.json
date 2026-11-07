@@ -1,0 +1,20 @@
+{
+  "settings": {
+    "dataStore": "NOTES",
+    "typeAnswers": true,
+    "convertHighlightsToClozes": true,
+    "flashcardTags": [
+      "#flashcards"
+    ],
+    "reviewLogFolder": "Flashcard Studio/Review log",
+    "scheduleDataVaultLocation": "Spaced Repetition",
+    "dailyLimitsEnabled": true,
+    "newCardsPerDay": 20,
+    "reviewsPerDay": 200,
+    "shuffleChoices": true,
+    "flashcardAgainText": "重来",
+    "flashcardHardText": "困难",
+    "flashcardGoodText": "良好",
+    "flashcardEasyText": "简单"
+  }
+}

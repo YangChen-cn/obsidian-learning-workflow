@@ -1,0 +1,8 @@
+{
+  "enableJs": false,
+  "preferredDateFormat": "YYYY-MM-DD",
+  "syncInterval": 200,
+  "excludedFolders": [
+    "templates"
+  ]
+}
