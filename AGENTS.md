@@ -20,6 +20,11 @@ Full learner-facing steps belong in the vault. A practice stage should have purp
 
 ## Changes to this workflow
 
+Maintainers of the public template: keep your own development archives in a separate,
+ignored `.learning/` workspace. Do not add them or their generated activity indexes
+to the shipped sample vault. This does not change the workflow for people using their
+own vaults; their archives belong in their own projects.
+
 Run `python3 -m unittest discover -s tests` and `python3 scripts/learning.py validate`. Plugin-kit changes also require the local setup check if plugins are installed; report checks not run accurately. Preserve themes, custom QuickAdd choices, plugin review data and local settings. Meta Bind writes stage_N only; it must not update status/mastery/learner checkboxes. Keep templates out of activity views.
 
 Never stage `.obsidian`, `.learning`, trash, plugin data.json, logs or secrets. Do not auto-commit or push unless the current user request authorizes it. Inspect staged changes before committing.
